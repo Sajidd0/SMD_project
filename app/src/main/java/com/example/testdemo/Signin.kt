@@ -24,6 +24,7 @@ class Signin : AppCompatActivity() {
         val password=findViewById<EditText>(R.id.editTextTextPassword)
         val Signin_button=findViewById<ImageButton>(R.id.button2)
         val emailview=findViewById<EditText>(R.id.editTextTextEmailAddress)
+        val frgtbtn =findViewById<TextView>(R.id.textView16)
         chip.setOnClickListener {
             if(a==false)
             {
@@ -37,6 +38,11 @@ class Signin : AppCompatActivity() {
                 password.setTransformationMethod(PasswordTransformationMethod.getInstance())
                 a=false
             }
+        }
+
+        frgtbtn.setOnClickListener{
+            val i = Intent(applicationContext, ResetPassword::class.java)
+            startActivity(i)
         }
         val signUpbtn=findViewById<TextView>(R.id.button)
         signUpbtn.setOnClickListener {

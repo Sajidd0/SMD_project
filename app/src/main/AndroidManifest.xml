@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.testdemo">
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.TestDemo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label=""
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TestDemo">
+
+        <activity
+            android:name=".ResetPassword"
+            android:exported="true" />
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
+
+
         <activity
             android:name=".fronthome"
             android:exported="true">
@@ -74,7 +90,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
