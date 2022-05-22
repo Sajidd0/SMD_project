@@ -1,13 +1,18 @@
 package com.example.testdemo
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+    private lateinit var context:Context;
     private var titles= arrayOf("Earthquake proof office chairs Predictive horns for cars Twitch.tv for putting together Ikea furniture Wearable fog machines Bubble prediction algorithms",
         "I want to start a mobile school that visits such villages around the year, camps there for a few months & we teach both children & grown ups",
         "Turning prisons into greenhouses, utilizing low-risk prisoners as groundskeepers and gardeners, simultaneously educating them to become chefs as rehabilitation into poverty-heavy cities",
@@ -53,14 +58,21 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         var itemtitle: TextView
         var likecount: TextView
 
+
         init{
+            context=itemview.context
             itemImage= itemview.findViewById(R.id.item_image)
             itemtitle= itemview.findViewById(R.id.item_title)
             likecount= itemview.findViewById(R.id.item_count)
 
+            itemview.setOnClickListener(){
+                val i=Intent(context,ideapage::class.java)
+                context.startActivity(i)
+            }
 
         }
     }
+
 
 
 }
