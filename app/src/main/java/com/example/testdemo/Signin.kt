@@ -53,16 +53,24 @@ class Signin : AppCompatActivity() {
             checkQuery.addListenerForSingleValueEvent(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
-                        val nameFromDB:String=snapshot.child(emailstr).child("name").getValue().toString()
-                        val phoneFromDB:String=snapshot.child(emailstr).child("phone").getValue().toString()
-                        val emailFromDB:String=snapshot.child(emailstr).child("email").getValue().toString()
-                        intnt.putExtra("nam",nameFromDB)
-                        intnt.putExtra("phon", phoneFromDB)
-                        intnt.putExtra("mail",emailFromDB)
-                        startActivity(intnt)
-                        //Toast.makeText(baseContext, nameFromDB,Toast.LENGTH_SHORT).show()
-
-
+                        val passFromDB:String=snapshot.child(emailstr).child("password").getValue().toString()
+                        if(passstr==passFromDB) {
+                            val nameFromDB: String =
+                                snapshot.child(emailstr).child("name").getValue().toString()
+                            val phoneFromDB: String =
+                                snapshot.child(emailstr).child("phone").getValue().toString()
+                            val emailFromDB: String =
+                                snapshot.child(emailstr).child("email").getValue().toString()
+                            intnt.putExtra("nam", nameFromDB)
+                            intnt.putExtra("phon", phoneFromDB)
+                            intnt.putExtra("mail", emailFromDB)
+                            startActivity(intnt)
+                            //Toast.makeText(baseContext, nameFromDB,Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(baseContext, "Incorrect Password",Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(baseContext, "Sign Up First",Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -71,29 +79,7 @@ class Signin : AppCompatActivity() {
                 }
 
             })
-            /* Auth.signInWithEmailAndPassword(emailstr, passstr)
-                 .addOnCompleteListener(this) { task ->
-                     if (task.isSuccessful) {
-                         startActivity(Intent(this,Home::class.java))
-                         finish()
-
-                     } else {
-                         // If sign in fails, display a message to the user.
-                         Toast.makeText(baseContext, "Authentication failed.",
-                             Toast.LENGTH_SHORT).show()
-                     }
-                 }
-                 */
-
         }
-    }
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        /*val currentUser = Auth.currentUser
-        if(currentUser != null){
-            reload(currentUser);
-        }*/
     }
 
 }

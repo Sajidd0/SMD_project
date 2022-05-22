@@ -73,6 +73,7 @@ class Home: AppCompatActivity() {
         val btn=findViewById<FloatingActionButton>(R.id.fab)
         btn.setOnClickListener(){
             val intent= Intent(this,addidea::class.java)
+            intent.putExtra("contact",phon)
             startActivity(intent)
         }
 

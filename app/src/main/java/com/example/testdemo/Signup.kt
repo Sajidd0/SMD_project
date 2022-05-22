@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
 class Signup:AppCompatActivity() {
@@ -34,8 +35,14 @@ class Signup:AppCompatActivity() {
             val conPass = confPassView.getText().toString().trim()
             val addr=addrView.getText().toString().trim()
             val mob=mobView.getText().toString().trim()
-            val user=UserHelper(name,email,password,conPass,addr,mob)
-            firebasereference.child(mob).setValue(user)
+
+            val user:UserHelper=UserHelper(name,email,password,conPass,addr,mob)
+            if(user.checkCredentials()){
+                firebasereference.child(mob).setValue(user)
+                Toast.makeText(baseContext, "Successfuly SignUp", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(baseContext, "Incorrect Credentials", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
