@@ -143,6 +143,7 @@
                     android:layout_height="match_parent" />
 
                 <Button
+                    android:id="@+id/txtbtn"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/blue"
