@@ -1,6 +1,5 @@
 package com.example.testdemo
 
-import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +11,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 
 class Signin : AppCompatActivity() {
     val cont: Context = this
@@ -24,7 +22,7 @@ class Signin : AppCompatActivity() {
         val password=findViewById<EditText>(R.id.editTextTextPassword)
         val Signin_button=findViewById<ImageButton>(R.id.button2)
         val emailview=findViewById<EditText>(R.id.editTextTextEmailAddress)
-        val frgtbtn =findViewById<TextView>(R.id.textView16)
+        val frgtbtn =findViewById<TextView>(R.id.forgetbtn)
         chip.setOnClickListener {
             if(a==false)
             {
@@ -41,7 +39,7 @@ class Signin : AppCompatActivity() {
         }
 
         frgtbtn.setOnClickListener{
-            val i = Intent(applicationContext, ResetPassword::class.java)
+            val i = Intent(applicationContext ,ResetPass::class.java)
             startActivity(i)
         }
         val signUpbtn=findViewById<TextView>(R.id.button)
