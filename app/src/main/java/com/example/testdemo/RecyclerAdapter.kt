@@ -1,5 +1,7 @@
 package com.example.testdemo
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import com.google.firebase.database.*
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
+    private lateinit var context:Context;
 
     private var likecount= arrayOf("100", "200", "250", "299", "199", "107", "765", "676", "322")
     private val itemImages= intArrayOf(
@@ -74,14 +77,21 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         var itemtitle: TextView
         var likecount: TextView
 
+
         init{
+            context=itemview.context
             itemImage= itemview.findViewById(R.id.item_image)
             itemtitle= itemview.findViewById(R.id.item_title)
             likecount= itemview.findViewById(R.id.item_count)
 
+            itemview.setOnClickListener(){
+                val i=Intent(context,ideapage::class.java)
+                context.startActivity(i)
+            }
 
         }
     }
+
 
 
 }

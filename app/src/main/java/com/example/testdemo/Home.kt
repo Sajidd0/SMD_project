@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +54,6 @@ class Home: AppCompatActivity() {
         toggle= ActionBarDrawerToggle(this,drawer,toolbar1,R.string.open,R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
-
         navview.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.home-> Toast.makeText(applicationContext,"clicked Home",Toast.LENGTH_SHORT).show()
