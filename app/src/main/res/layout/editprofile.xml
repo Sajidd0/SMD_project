@@ -138,7 +138,7 @@
                 android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Qualification"
+                android:text="Experiences"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -149,23 +149,8 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number"
-                android:hint="Enter your Qualification"/>
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Qualification"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:hint="Enter your Experiences"/>
 
-            <EditText
-                android:id="@+id/editTextPersonQualification3"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:hint="Enter your Qualification"/>
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
