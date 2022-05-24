@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/obj"
     android:layout_height="match_parent"
     android:background="@color/grey">
     <com.google.android.material.appbar.AppBarLayout
@@ -81,6 +82,7 @@
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
+                android:id="@+id/nameofentr"
                 app:layout_constraintBottom_toTopOf="@+id/textView9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.901"
@@ -157,7 +159,8 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/blue"
-                    android:text="Buy" />
+                    android:text="Buy"
+                    android:id="@+id/investit"/>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

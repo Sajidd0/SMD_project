@@ -4,12 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +32,11 @@ class Home: AppCompatActivity() {
             phon= bundle.getString("phon").toString()
             mail= bundle.getString("mail").toString()
         }
+       // val tool=findViewById<Toolbar>(R.id.toolbar)
+        val chatbtn=toolbar1.findViewById<ImageView>(R.id.chatbtn)
+        chatbtn.setOnClickListener(){
+            Toast.makeText(baseContext, "wow its a chat",Toast.LENGTH_SHORT).show()
+        }
         val navview=findViewById<NavigationView>(R.id.navigation)
        // val navigationView=findViewById<NavigationView>(R.id.navigation)
         val header:View=navview.getHeaderView(0)
@@ -54,17 +56,27 @@ class Home: AppCompatActivity() {
         toggle= ActionBarDrawerToggle(this,drawer,toolbar1,R.string.open,R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
-        navview.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.home-> Toast.makeText(applicationContext,"clicked Home",Toast.LENGTH_SHORT).show()
-                R.id.Setting->Toast.makeText(applicationContext,"clicked settings",Toast.LENGTH_SHORT).show()
-                R.id.blah->Toast.makeText(applicationContext,"clicked blah",Toast.LENGTH_SHORT).show()
-                R.id.account->Toast.makeText(applicationContext,"clicked account",Toast.LENGTH_SHORT).show()
-                R.id.signout->Toast.makeText(applicationContext,"clicked signout",Toast.LENGTH_SHORT).show()
-
+       /* navview.setNavigationItemSelectedListener{
+            var id: Int = it.itemId
+            if(id==R.id.home) {
+                val i =Intent(this,editprofile::class.java)
+                startActivity(i)
+            }
+            else if(id==R.id.Setting) {
+                Toast.makeText(applicationContext, "clicked settings", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.blah) {
+               Toast.makeText(applicationContext, "clicked blah", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.account) {
+                Toast.makeText(applicationContext, "clicked account", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.signout) {
+                Toast.makeText(applicationContext, "clicked signout", Toast.LENGTH_SHORT).show()
             }
             true
-        }
+            }*/
+
         layoutManager= LinearLayoutManager(this)
         var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager= layoutManager
@@ -81,6 +93,23 @@ class Home: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)){
+            var id: Int = item.itemId
+            if(id==R.id.home) {
+                val i =Intent(this,editprofile::class.java)
+                startActivity(i)
+            }
+            else if(id==R.id.Setting) {
+                Toast.makeText(baseContext, "clicked settings", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.blah) {
+                Toast.makeText(baseContext, "clicked blah", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.account) {
+                Toast.makeText(baseContext, "clicked account", Toast.LENGTH_SHORT).show()
+            }
+            else if(id==R.id.signout) {
+                Toast.makeText(baseContext, "clicked signout", Toast.LENGTH_SHORT).show()
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
