@@ -85,7 +85,9 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             likecount= itemview.findViewById(R.id.item_count)
 
             itemview.setOnClickListener(){
+                val titleName:String=itemtitle.text.toString()
                 val i=Intent(context,ideapage::class.java)
+                i.putExtra("title12",titleName)
                 context.startActivity(i)
             }
 
