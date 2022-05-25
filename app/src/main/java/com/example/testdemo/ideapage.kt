@@ -14,16 +14,60 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ideapage: AppCompatActivity(){
+    var username:String=""
+    var investmrntamount:String=""
+    var BuyAmount:String=""
+    var email:String=""
+    var contct:String=""
+    var addr:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ideapage)
         val obj=this
+        val i:Intent=getIntent()
+        val titleName=i.getStringExtra("title12")
+        val descTextView=findViewById<TextView>(R.id.textView9)
+        val firebaseref=FirebaseDatabase.getInstance().getReference("Users")
+        firebaseref.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for(data in snapshot.children){
+                    if(data.hasChild("Ideas")){
+                        for(idea in data.child("Ideas").children){
+                            if(idea.child("title").getValue().toString().trim()==titleName){
+                                descTextView.text = idea.child("desc").getValue().toString().trim()
+                                investmrntamount = idea.child("invstamnt").getValue().toString().trim()
+                                BuyAmount = idea.child("buyamnt").getValue().toString().trim()
+                                username=data.child("name").getValue().toString().trim()
+                                email=data.child("email").getValue().toString().trim()
+                                contct=data.child("phone").getValue().toString().trim()
+                                addr=data.child("address").getValue().toString().trim()
+
+                            }
+                        }
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
         val name=findViewById<TextView>(R.id.nameofentr)
+        name.text=titleName.toString()
         name.setOnClickListener(){
             val i=Intent(this,useridea::class.java)
+            i.putExtra("Username",username)
+            i.putExtra("mail",email)
+            i.putExtra("Contct",contct)
+            i.putExtra("address",addr)
             startActivity(i)
         }
         val textbtn = findViewById<Button>(R.id.txtbtn)
