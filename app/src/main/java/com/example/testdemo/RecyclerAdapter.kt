@@ -31,7 +31,7 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         }*/
     init {
         val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
-        titles.toMutableList()
+        //titles=titles.toMutableList()
             //val checkQuery: Query = firebasereference.orderByChild("phone")
         firebasereference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -39,7 +39,7 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
                 for(data in snapshot.children){
                     if(data.hasChild("Ideas")){
                         for(idea in data.child("Ideas").children){
-                            titles+=(idea.child("title").getValue().toString().trim())
+                            titles.toMutableList().add(idea.child("title").getValue().toString().trim())
                         }
                     }
                 }
