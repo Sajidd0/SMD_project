@@ -1,15 +1,15 @@
 package com.example.testdemo
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
@@ -18,6 +18,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
+import java.io.File
+import java.util.*
 
 class ideapage: AppCompatActivity(){
     var username:String=""
@@ -34,6 +38,9 @@ class ideapage: AppCompatActivity(){
         val i:Intent=getIntent()
         val titleName=i.getStringExtra("title12")
         val descTextView=findViewById<TextView>(R.id.textView9)
+        val ideaImageView=findViewById<ImageView>(R.id.ideaimag)
+        //val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
+        //val storagereference = firebasestorage.getReference("Images")
         val firebaseref=FirebaseDatabase.getInstance().getReference("Users")
         firebaseref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -49,6 +56,7 @@ class ideapage: AppCompatActivity(){
                                 email=data.child("email").getValue().toString().trim()
                                 contct=data.child("phone").getValue().toString().trim()
                                 addr=data.child("address").getValue().toString().trim()
+                                Picasso.get().load(data.child("image").getValue().toString().trim()).into(ideaImageView)
 
                             }
                         }
@@ -60,6 +68,13 @@ class ideapage: AppCompatActivity(){
                 TODO("Not yet implemented")
             }
         })
+        /*var imageuri:Uri
+        val mountainsRef = storagereference.child(contct)
+        val localfile:File= File.createTempFile(titleName,".jpg")
+
+        mountainsRef.getFile(localfile)
+        val bitmap: Bitmap = BitmapFactory.decodeFile(localfile.getAbsolutePath())
+        ideaImageView.setImageBitmap(bitmap)*/
         val name=findViewById<TextView>(R.id.nameofentr)
         name.text=titleName.toString()
         name.setOnClickListener(){
