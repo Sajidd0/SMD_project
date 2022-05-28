@@ -10,11 +10,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
     private lateinit var context:Context;
-
+    lateinit var contct:String
+    val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
+    val storagereference = firebasestorage.getReference("Images")
     private var likecount= arrayOf("100", "200", "250", "299", "199", "107", "765", "676", "322")
     private val itemImages= intArrayOf(
         R.drawable.idea1,
@@ -40,6 +44,7 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
                     if(data.hasChild("Ideas")){
                         for(idea in data.child("Ideas").children){
                             titles+=(idea.child("title").getValue().toString().trim())
+                            contct+=(idea.child("phone").getValue().toString().trim())
                         }
                     }
                 }
@@ -83,7 +88,9 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             itemImage= itemview.findViewById(R.id.item_image)
             itemtitle= itemview.findViewById(R.id.item_title)
             likecount= itemview.findViewById(R.id.item_count)
-
+            storagereference.child(contct).child(itemtitle.toString()).downloadUrl.addOnSuccessListener {
+                Picasso.get().load(it).into(itemImage)
+            }
             itemview.setOnClickListener(){
                 val titleName:String=itemtitle.text.toString()
                 val i=Intent(context,ideapage::class.java)

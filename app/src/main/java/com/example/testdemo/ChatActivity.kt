@@ -1,10 +1,12 @@
 package com.example.testdemo
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -25,13 +27,13 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
+        var context:Context=this;
         // val intent = Intent()
         val i=getIntent()
         val name = i.getStringExtra("name")
         val receiverUid = i.getStringExtra("email")
         val senderUid= i.getStringExtra("uemail")
-        mDbRef = FirebaseDatabase.getInstance().reference
+        mDbRef = FirebaseDatabase.getInstance().getReference("chats")
 
         senderRoom = receiverUid + senderUid
         receiverRoom = senderUid + receiverUid
@@ -48,7 +50,7 @@ class ChatActivity : AppCompatActivity() {
         chatRecyclerView.adapter = messageAdapter
 
         // logic for adding data to recyclerView
-        mDbRef.child("chats").child(senderRoom!!).child("messages")
+        mDbRef.child(senderRoom!!).child("messages")
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -73,12 +75,11 @@ class ChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener{
 
             val message = messageBox.text.toString()
-            val messageObject = Message(message, senderUid)
+            val messageObject = Message(message, senderUid, receiverUid)
 
-            mDbRef.child("chats").child(senderRoom!!).child("messages").push()
+            mDbRef.child(receiverRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
-                    mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
+                    Toast.makeText(context,"wowwwwwwwwhowwwwww",Toast.LENGTH_SHORT).show()
                 }
             messageBox.setText("")
         }

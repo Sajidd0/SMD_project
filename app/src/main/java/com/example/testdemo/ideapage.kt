@@ -39,8 +39,8 @@ class ideapage: AppCompatActivity(){
         val titleName=i.getStringExtra("title12")
         val descTextView=findViewById<TextView>(R.id.textView9)
         val ideaImageView=findViewById<ImageView>(R.id.ideaimag)
-        //val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
-        //val storagereference = firebasestorage.getReference("Images")
+        val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
+        val storagereference = firebasestorage.getReference("Images")
         val firebaseref=FirebaseDatabase.getInstance().getReference("Users")
         firebaseref.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -56,7 +56,10 @@ class ideapage: AppCompatActivity(){
                                 email=data.child("email").getValue().toString().trim()
                                 contct=data.child("phone").getValue().toString().trim()
                                 addr=data.child("address").getValue().toString().trim()
-                                Picasso.get().load(data.child("image").getValue().toString().trim()).into(ideaImageView)
+                               // Picasso.get().load(data.child("image").getValue().toString().trim()).into(ideaImageView)
+                                storagereference.child(contct).child(titleName).downloadUrl.addOnSuccessListener {
+                                    Picasso.get().load(it).into(ideaImageView)
+                                }
 
                             }
                         }
