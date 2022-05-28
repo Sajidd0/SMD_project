@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testdemo.User
 import com.google.firebase.auth.FirebaseAuth
 
 
-class UserAdapter(val context: Context, val userList: ArrayList<User>):
-    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemail:String):
 
+    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+    lateinit var currentUser:User
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false)
         return UserViewHolder(view)
@@ -21,17 +23,17 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>):
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         // bind with text
-        val currentUser = userList[position]
+        currentUser = userList[position]
         holder.textName.text = currentUser.name
 
-        holder.itemView.setOnClickListener{
+       /* holder.itemView.setOnClickListener{
             val intent = Intent(context,ChatActivity::class.java)
-
+            val uemail=this.uemail
             intent.putExtra("name",currentUser.name)
-            intent.putExtra("uid",currentUser.uid)
-
+            intent.putExtra("email",currentUser.email)
+            intent.putExtra("uemail", uemail)
             context.startActivity(intent)
-        }
+        }*/
 
     }
 
@@ -39,8 +41,21 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>):
         return userList.size
     }
 
-    class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textName = itemView.findViewById<TextView>(R.id.txt_name)
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var textName:TextView
+        init{
+            context=itemView.context
+            textName= itemView.findViewById<TextView>(R.id.txt_name)
+            itemView.setOnClickListener(){
+                val intent = Intent(context,ChatActivity::class.java)
+                intent.putExtra("name",currentUser.name.toString())
+                intent.putExtra("email",currentUser.email.toString())
+                intent.putExtra("uemail", uemail)
+               // Toast.makeText(context,currentUser.email+uemail,Toast.LENGTH_SHORT).show()
+                context.startActivity(intent)
+            }
+        }
+
 
     }
 }

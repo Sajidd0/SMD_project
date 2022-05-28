@@ -23,12 +23,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var email:String;
+        val i=getIntent()
+        email=i.getStringExtra("email").toString()
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().reference //getReference()
 
         userList = ArrayList()
-        adapter = UserAdapter(this, userList)
+        adapter = UserAdapter(this, userList, email)
 
         // use recyclerview
         userRecyclerView = findViewById(R.id.userRecyclerView)
@@ -37,15 +40,16 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView.adapter = adapter
 
         // realtime database load
-        mDbRef.child("user").addValueEventListener(object : ValueEventListener {
+        mDbRef.child("Users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 userList.clear()
+
                 for (postSnapshot in snapshot.children) {
                     // get one user
                     val currentUser = postSnapshot.getValue(User::class.java)
                     // add user to list
-                    if(mAuth.currentUser?.uid != currentUser?.uid){
+                    if(mAuth.currentUser?.email!= currentUser?.email){
                         userList.add(currentUser!!)
                     }
 

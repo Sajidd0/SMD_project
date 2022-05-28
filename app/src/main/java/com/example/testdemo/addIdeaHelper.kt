@@ -1,6 +1,6 @@
 package com.example.testdemo
 
-import android.media.Image
+import com.google.firebase.storage.StorageReference
 
-class addIdeaHelper(val title:String,val desc:String,val Contact:String,val invstamnt:String,val Buyamnt:String,val img:Image) {
+class addIdeaHelper(val title:String,val desc:String,val Contact:String,val invstamnt:String,val Buyamnt:String,val image:String) {
 }

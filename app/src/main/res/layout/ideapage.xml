@@ -20,6 +20,7 @@
             android:id="@+id/collapsing_toolbar"
             android:background="@color/grey">
             <ImageView
+                android:id="@+id/ideaimag"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_gravity="center"
