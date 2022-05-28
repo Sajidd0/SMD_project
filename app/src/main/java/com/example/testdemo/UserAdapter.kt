@@ -17,7 +17,7 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     lateinit var currentUser:User
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.user_layout, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.user_layout, parent, false)
         return UserViewHolder(view)
     }
 
@@ -45,14 +45,12 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
         var textName:TextView
         init{
             context=itemView.context
-            textName= itemView.findViewById(R.id.txt_name)
-            textName.setOnClickListener(){
+            textName= itemView.findViewById<TextView>(R.id.txt_name)
+            itemView.setOnClickListener(){
                 val intent = Intent(context,ChatActivity::class.java)
-                val text1:String=currentUser.name.toString()
-                val text2:String=currentUser.email.toString()
-                currentUser.email=currentUser.email.toString()
-                intent.putExtra("name",text1)
-                intent.putExtra("email",text2)
+
+                intent.putExtra("name",currentUser.name.toString())
+                intent.putExtra("email",currentUser.phone.toString())
                 intent.putExtra("uemail", uemail)
                // Toast.makeText(context,currentUser.email+uemail,Toast.LENGTH_SHORT).show()
                 context.startActivity(intent)
