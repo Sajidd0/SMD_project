@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
     private lateinit var context:Context;
-    lateinit var contct:String
+    var contct:List<String> = listOf()
     val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
     val storagereference = firebasestorage.getReference("Images")
     private var likecount= arrayOf("100", "200", "250", "299", "199", "107", "765", "676", "322")
@@ -69,7 +69,10 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         holder.itemtitle.text= titles[position]
         holder.likecount.text= likecount[position]
-        holder.itemImage.setImageResource(itemImages[position])
+       // holder.itemImage.setImageResource(itemImages[position])
+        storagereference.child(contct[position]).child(holder.itemtitle.text.toString()).downloadUrl.addOnSuccessListener {
+            Picasso.get().load(it).into(holder.itemImage)
+        }
 
     }
 
@@ -88,9 +91,6 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             itemImage= itemview.findViewById(R.id.item_image)
             itemtitle= itemview.findViewById(R.id.item_title)
             likecount= itemview.findViewById(R.id.item_count)
-            storagereference.child(contct).child(itemtitle.toString()).downloadUrl.addOnSuccessListener {
-                Picasso.get().load(it).into(itemImage)
-            }
             itemview.setOnClickListener(){
                 val titleName:String=itemtitle.text.toString()
                 val i=Intent(context,ideapage::class.java)
