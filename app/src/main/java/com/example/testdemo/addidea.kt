@@ -59,12 +59,14 @@ class addidea:AppCompatActivity() {
 
                 Toast.makeText(baseContext, "Idea successfully uploaded",Toast.LENGTH_SHORT).show()
 
-                var mountainsRef = storagereference.child(phone+'/'+title+'/')
+                var mountainsRef = storagereference.child(phone+'/'+title)
+
+                val it:Task<Uri> = mountainsRef.downloadUrl
                 //var mountainsref: Task<Uri> = mountainsRef.downloadUrl
 
 
                 imageUri?.let { mountainsRef.putFile(it)}
-                val decsObject:addIdeaHelper=addIdeaHelper(title,description,contact,invstamnt,buyamnt,mountainsRef.toString())
+                var decsObject:addIdeaHelper = addIdeaHelper(title,description,contact,invstamnt,buyamnt,it.toString())
                 firebasereference.child(phone.toString()).child("Ideas").child(title).setValue(decsObject)
 
 
