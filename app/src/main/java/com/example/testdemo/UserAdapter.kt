@@ -48,8 +48,9 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
             textName= itemView.findViewById<TextView>(R.id.txt_name)
             itemView.setOnClickListener(){
                 val intent = Intent(context,ChatActivity::class.java)
+
                 intent.putExtra("name",currentUser.name.toString())
-                intent.putExtra("email",currentUser.email.toString())
+                intent.putExtra("email",currentUser.phone.toString())
                 intent.putExtra("uemail", uemail)
                // Toast.makeText(context,currentUser.email+uemail,Toast.LENGTH_SHORT).show()
                 context.startActivity(intent)

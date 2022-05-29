@@ -59,14 +59,12 @@ class addidea:AppCompatActivity() {
 
                 Toast.makeText(baseContext, "Idea successfully uploaded",Toast.LENGTH_SHORT).show()
 
-                var mountainsRef = storagereference.child(phone+'/'+title)
-
-                val it:Task<Uri> = mountainsRef.downloadUrl
+                var mountainsRef = storagereference.child(phone+'/'+title+'/')
                 //var mountainsref: Task<Uri> = mountainsRef.downloadUrl
 
 
                 imageUri?.let { mountainsRef.putFile(it)}
-                var decsObject:addIdeaHelper = addIdeaHelper(title,description,contact,invstamnt,buyamnt,it.toString())
+                val decsObject:addIdeaHelper=addIdeaHelper(title,description,contact,invstamnt,buyamnt,mountainsRef.downloadUrl.toString())
                 firebasereference.child(phone.toString()).child("Ideas").child(title).setValue(decsObject)
 
 
@@ -84,7 +82,6 @@ class addidea:AppCompatActivity() {
 
 // Create a reference to 'images/mountains.jpg'
             /*val mountainImagesRef = storagereference.child("images/"+randomKey)
-
 // While the file names are the same, the references point to different files
             mountainsRef.name == mountainImagesRef.name // true*/
         }
