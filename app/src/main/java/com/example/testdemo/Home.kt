@@ -36,7 +36,7 @@ class Home: AppCompatActivity() {
         val chatbtn=toolbar1.findViewById<ImageView>(R.id.chatbtn)
         chatbtn.setOnClickListener(){
             val i=Intent(this,MainActivity::class.java)
-            i.putExtra("email",phon)
+            i.putExtra("phone",phon)
             startActivity(i);
         }
         val navview=findViewById<NavigationView>(R.id.navigation)

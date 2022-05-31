@@ -17,8 +17,7 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
     private lateinit var context:Context;
     var contct:List<String> = listOf()
-    val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
-    val storagereference = firebasestorage.getReference("Images")
+     var images:List<String> = listOf()
     private var likecount= arrayOf("100", "200", "250", "299", "199", "107", "765", "676", "322")
     private val itemImages= intArrayOf(
         R.drawable.idea1,
@@ -34,17 +33,22 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     /*init{
         }*/
     init {
-        val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
+
         titles.toMutableList()
+        val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
+        val storagereference = firebasestorage.getReference("Images")
             //val checkQuery: Query = firebasereference.orderByChild("phone")
-        firebasereference.addValueEventListener(object:ValueEventListener{
+        val firebasereference= FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for(data in snapshot.children){
                     if(data.hasChild("Ideas")){
                         for(idea in data.child("Ideas").children){
-                            titles+=(idea.child("title").getValue().toString().trim())
+                            val a=(idea.child("title").getValue().toString().trim())
+                            titles+=a
                             contct+=(idea.child("phone").getValue().toString().trim())
+                           /*
+                            }*/
                         }
                     }
                 }
@@ -55,6 +59,14 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             }
         })
         //titles+=("dsakf;lkj")
+        /*var count=0
+        for (element in contct) {
+            //loops items
+            storagereference.child(element).child(titles[count]).downloadUrl.addOnSuccessListener {
+                images+=it.toString()
+            }
+            count+=1
+        }*/
 
     }
     override fun onCreateViewHolder(
@@ -66,13 +78,12 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     }
 
 
-    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemtitle.text= titles[position]
         holder.likecount.text= likecount[position]
        // holder.itemImage.setImageResource(itemImages[position])
-        storagereference.child(contct[position]).child(holder.itemtitle.text.toString()).downloadUrl.addOnSuccessListener {
-            Picasso.get().load(it).into(holder.itemImage)
-        }
+        //Picasso.get().load(images[position]).into(holder.itemImage)
+
 
     }
 
