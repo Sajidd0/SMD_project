@@ -23,15 +23,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var email:String;
+        var phone:String;
         val i=getIntent()
-        email=i.getStringExtra("email").toString()
+        phone=i.getStringExtra("phone").toString()
 
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().reference //getReference()
 
         userList = ArrayList()
-        adapter = UserAdapter(this, userList, email)
+        adapter = UserAdapter(this, userList, phone)
 
         // use recyclerview
         userRecyclerView = findViewById(R.id.userRecyclerView)
