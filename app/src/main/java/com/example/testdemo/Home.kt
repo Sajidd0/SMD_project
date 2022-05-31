@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
@@ -83,10 +82,10 @@ class Home: AppCompatActivity() {
         }
        // val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
         //val storagereference = firebasestorage.getReference("Images")
-        val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
-        titles.toMutableList()
+        var firebasereference:DatabaseReference = Firebase.database.getReference("Users")
+        //titles.toMutableList()
         //val checkQuery: Query = firebasereference.orderByChild("phone")
-        firebasereference.addValueEventListener(object: ValueEventListener {
+        val temp = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for(data in snapshot.children){
@@ -99,10 +98,12 @@ class Home: AppCompatActivity() {
                 }
 
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })
+        }
+        firebasereference.addListenerForSingleValueEvent(temp)
         layoutManager= LinearLayoutManager(this)
         var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager= layoutManager
