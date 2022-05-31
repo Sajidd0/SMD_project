@@ -13,7 +13,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter(var Cont:Context): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class interprenurAdapter(var Cont:Context,var phone:String): RecyclerView.Adapter<interprenurAdapter.ViewHolder>() {
     var titles:List<String> = listOf()
     //private lateinit var context:Context;
     var contct:List<String> = listOf()
@@ -34,19 +34,17 @@ class RecyclerAdapter(var Cont:Context): RecyclerView.Adapter<RecyclerAdapter.Vi
     /*init{
         }*/
     init {
-        val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
+        val firebasereference= FirebaseDatabase.getInstance().getReference("Users").child(phone).child("Ideas")
         titles.toMutableList()
-            //val checkQuery: Query = firebasereference.orderByChild("phone")
+
+
+        //val checkQuery: Query = firebasereference.orderByChild("phone")
         firebasereference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for(data in snapshot.children){
-                    if(data.hasChild("Ideas")){
-                        for(idea in data.child("Ideas").children){
-                            titles+=(idea.child("title").getValue().toString().trim())
-                            contct+=(idea.child("phone").getValue().toString().trim())
-                        }
-                    }
+                    titles+=(data.child("title").getValue().toString().trim())
+                    contct+=(data.child("phone").getValue().toString().trim())
                 }
 
             }
@@ -63,10 +61,10 @@ class RecyclerAdapter(var Cont:Context): RecyclerView.Adapter<RecyclerAdapter.Vi
     }
 
 
-    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: interprenurAdapter.ViewHolder, position: Int) {
         holder.itemtitle.text= titles[position]
         holder.likecount.text= likecount[position]
-       // holder.itemImage.setImageResource(itemImages[position])
+        // holder.itemImage.setImageResource(itemImages[position])
         storagereference.child(contct[position]).child(holder.itemtitle.text.toString()).downloadUrl.addOnSuccessListener {
             Picasso.get().load(it).into(holder.itemImage)
         }
@@ -97,7 +95,4 @@ class RecyclerAdapter(var Cont:Context): RecyclerView.Adapter<RecyclerAdapter.Vi
 
         }
     }
-
-
-
 }

@@ -82,7 +82,6 @@ class addidea:AppCompatActivity() {
 
 // Create a reference to 'images/mountains.jpg'
             /*val mountainImagesRef = storagereference.child("images/"+randomKey)
-
 // While the file names are the same, the references point to different files
             mountainsRef.name == mountainImagesRef.name // true*/
         }

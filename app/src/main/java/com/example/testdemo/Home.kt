@@ -24,8 +24,10 @@ class Home: AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private var layoutManager: RecyclerView.LayoutManager?=null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>?=null
-    var titles:List<String> = listOf()
-    var contct:List<String> = listOf()
+    private var adapter1: RecyclerView.Adapter<interprenurAdapter.ViewHolder>?=null
+
+    //var titles:List<String> = listOf()
+    //var contct:List<String> = listOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainhome)
@@ -34,12 +36,42 @@ class Home: AppCompatActivity() {
         var nam:String=" "
         var phon:String=" "
         var mail:String=" "
+        var status:String=""
         if(bundle!=null)
         {
             nam=bundle.getString("nam").toString()
             phon= bundle.getString("phon").toString()
             mail= bundle.getString("mail").toString()
+            status= bundle.getString("status").toString()
         }
+
+        val btn=findViewById<FloatingActionButton>(R.id.fab)
+        btn.setOnClickListener(){
+            val intent= Intent(this,addidea::class.java)
+            intent.putExtra("contact",phon)
+            startActivity(intent)
+        }
+
+        if(status.equals("true")){//invester
+            btn.visibility=View.GONE
+
+            layoutManager= LinearLayoutManager(this)
+            var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
+            recyclerView.layoutManager= layoutManager
+            adapter= RecyclerAdapter(this)
+            recyclerView.adapter = adapter
+
+        }else{
+
+            layoutManager= LinearLayoutManager(this)
+            var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
+            recyclerView.layoutManager= layoutManager
+            adapter1 = interprenurAdapter(this,phon)
+            recyclerView.adapter = adapter
+
+
+        }
+
        // val tool=findViewById<Toolbar>(R.id.toolbar)
         val chatbtn=toolbar1.findViewById<ImageView>(R.id.chatbtn)
         chatbtn.setOnClickListener(){
@@ -71,6 +103,7 @@ class Home: AppCompatActivity() {
             when(it.itemId) {
                 R.id.home->{
                     val i =Intent(this,editprofile::class.java)
+                    i.putExtra("phon",phon)
                     startActivity(i)
                 }
                 R.id.Setting->Toast.makeText(applicationContext, "clicked settings1", Toast.LENGTH_SHORT).show()
@@ -83,12 +116,11 @@ class Home: AppCompatActivity() {
         }
        // val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
         //val storagereference = firebasestorage.getReference("Images")
-        val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
+        /*val firebasereference = FirebaseDatabase.getInstance().getReference("Users")
         titles.toMutableList()
         //val checkQuery: Query = firebasereference.orderByChild("phone")
         firebasereference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 for(data in snapshot.children){
                     if(data.hasChild("Ideas")){
                         for(idea in data.child("Ideas").children){
@@ -97,23 +129,12 @@ class Home: AppCompatActivity() {
                         }
                     }
                 }
-
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })
-        layoutManager= LinearLayoutManager(this)
-        var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager= layoutManager
-        adapter= RecyclerAdapter(this,titles,contct)
-        recyclerView.adapter= adapter
-        val btn=findViewById<FloatingActionButton>(R.id.fab)
-        btn.setOnClickListener(){
-            val intent= Intent(this,addidea::class.java)
-            intent.putExtra("contact",phon)
-            startActivity(intent)
-        }
+        })*/
+
 
     }
 

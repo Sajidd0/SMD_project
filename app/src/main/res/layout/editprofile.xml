@@ -155,6 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
             <Button
+                android:id="@+id/editProfButton"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
