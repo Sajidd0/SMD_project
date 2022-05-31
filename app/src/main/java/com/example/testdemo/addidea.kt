@@ -64,7 +64,7 @@ class addidea:AppCompatActivity() {
 
 
                 imageUri?.let { mountainsRef.putFile(it)}
-                val decsObject:addIdeaHelper=addIdeaHelper(title,description,contact,invstamnt,buyamnt,mountainsRef.toString())
+                val decsObject:addIdeaHelper=addIdeaHelper(title,description,contact,invstamnt,buyamnt,mountainsRef.downloadUrl.toString())
                 firebasereference.child(phone.toString()).child("Ideas").child(title).setValue(decsObject)
 
 

@@ -13,11 +13,12 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-    var titles:List<String> = listOf()
-    private lateinit var context:Context;
-    var contct:List<String> = listOf()
-     var images:List<String> = listOf()
+class RecyclerAdapter(var Cont:Context,var titles:List<String>, var cont:List<String>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+    //var titles:List<String> = listOf()
+    //private lateinit var context:Context;
+    //var contct:List<String> = listOf()
+    val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
+    val storagereference = firebasestorage.getReference("Images")
     private var likecount= arrayOf("100", "200", "250", "299", "199", "107", "765", "676", "322")
     private val itemImages= intArrayOf(
         R.drawable.idea1,
@@ -32,23 +33,18 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     )
     /*init{
         }*/
-    init {
-
+    /*init {
+        val firebasereference= FirebaseDatabase.getInstance().getReference("Users")
         titles.toMutableList()
-        val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
-        val storagereference = firebasestorage.getReference("Images")
             //val checkQuery: Query = firebasereference.orderByChild("phone")
-        val firebasereference= FirebaseDatabase.getInstance().getReference("Users").addValueEventListener(object:ValueEventListener{
+        firebasereference.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for(data in snapshot.children){
                     if(data.hasChild("Ideas")){
                         for(idea in data.child("Ideas").children){
-                            val a=(idea.child("title").getValue().toString().trim())
-                            titles+=a
+                            titles+=(idea.child("title").getValue().toString().trim())
                             contct+=(idea.child("phone").getValue().toString().trim())
-                           /*
-                            }*/
                         }
                     }
                 }
@@ -59,31 +55,21 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             }
         })
         //titles+=("dsakf;lkj")
-        /*var count=0
-        for (element in contct) {
-            //loops items
-            storagereference.child(element).child(titles[count]).downloadUrl.addOnSuccessListener {
-                images+=it.toString()
-            }
-            count+=1
-        }*/
 
-    }
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    }*/
+    override fun onCreateViewHolder(parent:ViewGroup,viewtype:Int):ViewHolder{
         val v= LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
         return ViewHolder(v)
     }
 
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         holder.itemtitle.text= titles[position]
         holder.likecount.text= likecount[position]
        // holder.itemImage.setImageResource(itemImages[position])
-        //Picasso.get().load(images[position]).into(holder.itemImage)
-
+        storagereference.child(cont[position]).child(holder.itemtitle.text.toString()).downloadUrl.addOnSuccessListener {
+            Picasso.get().load(it).into(holder.itemImage)
+        }
 
     }
 
@@ -98,15 +84,15 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
 
         init{
-            context=itemview.context
+            Cont=itemview.context
             itemImage= itemview.findViewById(R.id.item_image)
             itemtitle= itemview.findViewById(R.id.item_title)
             likecount= itemview.findViewById(R.id.item_count)
             itemview.setOnClickListener(){
                 val titleName:String=itemtitle.text.toString()
-                val i=Intent(context,ideapage::class.java)
+                val i=Intent(Cont,ideapage::class.java)
                 i.putExtra("title12",titleName)
-                context.startActivity(i)
+                Cont.startActivity(i)
             }
 
         }
