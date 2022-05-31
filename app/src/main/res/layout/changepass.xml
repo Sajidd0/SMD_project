@@ -25,7 +25,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="224dp"
-        android:text="Enter Current Passowrd" />
+        android:text="Enter Phone Number" />
 
 
 
@@ -36,14 +36,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/currentpass"
+        android:id="@+id/phon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView18"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="9dp"
-        android:hint="Current Password" />
+        android:hint="Phone Number" />
 
     <TextView
         android:id="@+id/textView20"
@@ -67,7 +67,7 @@
         android:id="@+id/newpasswordstate"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        android:layout_below="@+id/currentpass"
+        android:layout_below="@+id/phon"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"

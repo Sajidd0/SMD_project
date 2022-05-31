@@ -47,11 +47,16 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
             context=itemView.context
             textName= itemView.findViewById<TextView>(R.id.txt_name)
             itemView.setOnClickListener(){
-                val intent = Intent(context,ChatActivity::class.java)
+                val receivernum:String = currentUser.phone.toString()
+                val receivername:String= currentUser.name.toString()
+                val sendernum:String= uemail
 
-                intent.putExtra("name",currentUser.name.toString())
-                intent.putExtra("email",currentUser.phone.toString())
-                intent.putExtra("uemail", uemail)
+                val intent = Intent(context,ChatActivity::class.java)
+                intent.putExtra("name",receivername)
+                intent.putExtra("email", receivernum)
+                intent.putExtra("uemail", sendernum)
+                print(currentUser.name)
+                print(currentUser.phone)
                // Toast.makeText(context,currentUser.email+uemail,Toast.LENGTH_SHORT).show()
                 context.startActivity(intent)
             }

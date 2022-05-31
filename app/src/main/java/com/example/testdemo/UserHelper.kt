@@ -2,7 +2,7 @@ package com.example.testdemo
 
 import android.widget.Toast
 
-class UserHelper(val name:String,val email:String,val Password:String,val conPassword:String,val address:String,val Phone:String) {
+class UserHelper(val name:String,val email:String,val Password:String,val conPassword:String,val address:String,val Phone:String,val status:String) {
     fun checkCredentials():Boolean{
         if((name.isEmpty())||email.isEmpty()||Password.isEmpty()||conPassword.isEmpty()||address.isEmpty()||Phone.isEmpty()){
             return false

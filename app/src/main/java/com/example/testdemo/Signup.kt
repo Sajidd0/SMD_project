@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
 class Signup:AppCompatActivity() {
+    lateinit var status:String
     override fun onCreate(savedInstanceState: Bundle?) {
         val firebasereference=FirebaseDatabase.getInstance().getReference("Users")
 
@@ -25,8 +27,10 @@ class Signup:AppCompatActivity() {
         val confPassView = findViewById<EditText>(R.id.editTextTextPassword3)
         val addrView = findViewById<EditText>(R.id.editTextTextPersonName8)
         val mobView = findViewById<EditText>(R.id.editTextTextPersonName81)
-
-
+        val sw1 = findViewById<Switch>(R.id.switch1)
+        sw1?.setOnCheckedChangeListener({ _ , isChecked ->
+             if (isChecked) status="true" else status="false"
+        })
         val signUpButton = findViewById<ImageButton>(R.id.button2)
         signUpButton.setOnClickListener {
             val name=nameView.getText().toString().trim()
@@ -36,7 +40,7 @@ class Signup:AppCompatActivity() {
             val addr=addrView.getText().toString().trim()
             val mob=mobView.getText().toString().trim()
 
-            val user:UserHelper=UserHelper(name,email,password,conPass,addr,mob)
+            val user:UserHelper=UserHelper(name,email,password,conPass,addr,mob,status)
             if(user.checkCredentials()){
                 firebasereference.child(mob).setValue(user)
                 Toast.makeText(baseContext, "Successfuly SignUp", Toast.LENGTH_SHORT).show()
