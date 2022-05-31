@@ -24,6 +24,8 @@ class Home: AppCompatActivity() {
     lateinit var toggle: ActionBarDrawerToggle
     private var layoutManager: RecyclerView.LayoutManager?=null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>?=null
+    private var adapter1: RecyclerView.Adapter<interprenurAdapter.ViewHolder>?=null
+
     //var titles:List<String> = listOf()
     //var contct:List<String> = listOf()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +36,42 @@ class Home: AppCompatActivity() {
         var nam:String=" "
         var phon:String=" "
         var mail:String=" "
+        var status:String=""
         if(bundle!=null)
         {
             nam=bundle.getString("nam").toString()
             phon= bundle.getString("phon").toString()
             mail= bundle.getString("mail").toString()
+            status= bundle.getString("status").toString()
         }
+
+        val btn=findViewById<FloatingActionButton>(R.id.fab)
+        btn.setOnClickListener(){
+            val intent= Intent(this,addidea::class.java)
+            intent.putExtra("contact",phon)
+            startActivity(intent)
+        }
+
+        if(status.equals("true")){//invester
+            btn.visibility=View.GONE
+
+            layoutManager= LinearLayoutManager(this)
+            var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
+            recyclerView.layoutManager= layoutManager
+            adapter= RecyclerAdapter(this)
+            recyclerView.adapter = adapter
+
+        }else{
+
+            layoutManager= LinearLayoutManager(this)
+            var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
+            recyclerView.layoutManager= layoutManager
+            adapter1 = interprenurAdapter(this,phon)
+            recyclerView.adapter = adapter
+
+
+        }
+
        // val tool=findViewById<Toolbar>(R.id.toolbar)
         val chatbtn=toolbar1.findViewById<ImageView>(R.id.chatbtn)
         chatbtn.setOnClickListener(){
@@ -102,17 +134,7 @@ class Home: AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })*/
-        layoutManager= LinearLayoutManager(this)
-        var recyclerView:RecyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager= layoutManager
-        adapter= RecyclerAdapter(this)
-        recyclerView.adapter = adapter
-        val btn=findViewById<FloatingActionButton>(R.id.fab)
-        btn.setOnClickListener(){
-            val intent= Intent(this,addidea::class.java)
-            intent.putExtra("contact",phon)
-            startActivity(intent)
-        }
+
 
     }
 

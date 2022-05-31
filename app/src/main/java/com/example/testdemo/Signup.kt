@@ -29,7 +29,7 @@ class Signup:AppCompatActivity() {
         val mobView = findViewById<EditText>(R.id.editTextTextPersonName81)
         val sw1 = findViewById<Switch>(R.id.switch1)
         sw1?.setOnCheckedChangeListener({ _ , isChecked ->
-             if (isChecked) status="Investor" else status="Entrepreneur"
+             if (isChecked) status="true" else status="false"
         })
         val signUpButton = findViewById<ImageButton>(R.id.button2)
         signUpButton.setOnClickListener {
@@ -40,7 +40,7 @@ class Signup:AppCompatActivity() {
             val addr=addrView.getText().toString().trim()
             val mob=mobView.getText().toString().trim()
 
-            val user:UserHelper=UserHelper(name,email,password,conPass,addr,mob)
+            val user:UserHelper=UserHelper(name,email,password,conPass,addr,mob,status)
             if(user.checkCredentials()){
                 firebasereference.child(mob).setValue(user)
                 Toast.makeText(baseContext, "Successfuly SignUp", Toast.LENGTH_SHORT).show()

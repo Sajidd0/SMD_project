@@ -65,9 +65,11 @@ class Signin : AppCompatActivity() {
                                 snapshot.child(emailstr).child("phone").getValue().toString()
                             val emailFromDB: String =
                                 snapshot.child(emailstr).child("email").getValue().toString()
+                            val statusFromDB:String=snapshot.child(emailstr).child("status").getValue().toString()
                             intnt.putExtra("nam", nameFromDB)
                             intnt.putExtra("phon", phoneFromDB)
                             intnt.putExtra("mail", emailFromDB)
+                            intnt.putExtra("status", statusFromDB)
                             startActivity(intnt)
                             //Toast.makeText(baseContext, nameFromDB,Toast.LENGTH_SHORT).show()
                         }else{
