@@ -47,10 +47,7 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
             context=itemView.context
             textName= itemView.findViewById<TextView>(R.id.username_txt)
             itemView.setOnClickListener(){
-
-                print(textName)
-                var tempname= itemView.findViewById<View?>(R.id.username_txt)
-                var name:String= tempname.toString()
+                var name:String= textName.text.toString()
                 var receivernum:String=name
                 var receivername:String=name
                 for(obj in userList)
