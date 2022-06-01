@@ -58,7 +58,7 @@ class ChatActivity : AppCompatActivity() {
 
                     for(postSnapshot in snapshot.children){
 
-                        val message = postSnapshot.getValue(Message::class.java)
+                        val message=postSnapshot.getValue(Message::class.java)
                         messageList.add(message!!)
 
                     }
