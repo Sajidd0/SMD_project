@@ -90,6 +90,7 @@ class interprenurAdapter(var Cont:Context,var phone:String): RecyclerView.Adapte
                 val titleName:String=itemtitle.text.toString()
                 val i=Intent(Cont,ideapage::class.java)
                 i.putExtra("title12",titleName)
+                i.putExtra("title12",titleName)
                 Cont.startActivity(i)
             }
 
