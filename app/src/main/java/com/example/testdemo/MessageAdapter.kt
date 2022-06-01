@@ -1,7 +1,6 @@
 package com.example.testdemo
 
 import android.content.Context
-import android.view.ContentInfo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 
-class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
+class MessageAdapter(val context: Context, val RmessageList: ArrayList<Message>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val ITEM_RECEIVE = 1
@@ -26,13 +25,11 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
             val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
             return SentViewHolder(view)
         }
-
-
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val currentMessage = messageList[position]
+        val currentMessage = RmessageList[position]
 
         if(holder.javaClass == SentViewHolder::class.java){
             // do the stuff for sent view holder
@@ -48,8 +45,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
 
     override fun getItemViewType(position: Int): Int {
 
-        val currentMessage = messageList[position]
-
+        val currentMessage = RmessageList[position]
         if(FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)){
             return ITEM_SENT
         }else{
@@ -58,7 +54,7 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>):
     }
 
     override fun getItemCount(): Int {
-        return messageList.size
+        return RmessageList.size
 
     }
 

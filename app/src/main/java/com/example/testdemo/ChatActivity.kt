@@ -18,7 +18,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageBox: EditText
     private lateinit var sendButton: ImageView
     private lateinit var messageAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Message>
+    private lateinit var SmessageList: ArrayList<Message>
     private lateinit var mDbRef: DatabaseReference
 
     var receiverRoom: String? = null
@@ -43,8 +43,8 @@ class ChatActivity : AppCompatActivity() {
         chatRecyclerView = findViewById(R.id.charRecyclerView)
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sentButton)
-        messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, messageList)
+        SmessageList = ArrayList()
+        messageAdapter = MessageAdapter(this, SmessageList)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
@@ -54,12 +54,12 @@ class ChatActivity : AppCompatActivity() {
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    messageList.clear()
+                    SmessageList.clear()
 
                     for(postSnapshot in snapshot.children){
 
                         val message=postSnapshot.getValue(Message::class.java)
-                        messageList.add(message!!)
+                        SmessageList.add(message!!)
 
                     }
                     messageAdapter.notifyDataSetChanged()
@@ -70,14 +70,13 @@ class ChatActivity : AppCompatActivity() {
                 }
 
             })
-
         // adding the message to database
         sendButton.setOnClickListener{
 
             val message = messageBox.text.toString()
-            val messageObject = Message(message, senderUid, receiverUid)
+            val messageObject = Message(message, senderUid)
 
-            mDbRef.child(receiverRoom!!).child("messages").push()
+            mDbRef.child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     Toast.makeText(context,"wowwwwwwwwhowwwwww",Toast.LENGTH_SHORT).show()
                 }
