@@ -24,7 +24,7 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         // bind with text
         currentUser = userList[position]
-        holder.textName.text = currentUser.name
+        holder.textName.text = userList[position].name
 
        /* holder.itemView.setOnClickListener{
             val intent = Intent(context,ChatActivity::class.java)
@@ -45,10 +45,21 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
         var textName:TextView
         init{
             context=itemView.context
-            textName= itemView.findViewById<TextView>(R.id.txt_name)
+            textName= itemView.findViewById<TextView>(R.id.username_txt)
             itemView.setOnClickListener(){
-                val receivernum:String = currentUser.phone.toString()
-                val receivername:String= currentUser.name.toString()
+
+                print(textName)
+                var tempname= itemView.findViewById<View?>(R.id.username_txt)
+                var name:String= tempname.toString()
+                var receivernum:String=name
+                var receivername:String=name
+                for(obj in userList)
+                {
+                    if(obj.name.equals(name)) {
+                        receivername = obj.name.toString()
+                        receivernum = obj.phone.toString()
+                    }
+                }
                 val sendernum:String= uemail
 
                 val intent = Intent(context,ChatActivity::class.java)
