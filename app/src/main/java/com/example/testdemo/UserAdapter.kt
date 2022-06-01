@@ -55,6 +55,7 @@ class UserAdapter(var context: Context, val userList: ArrayList<User>, val uemai
                     if(obj.name.equals(name)) {
                         receivername = obj.name.toString()
                         receivernum = obj.phone.toString()
+                        break
                     }
                 }
                 val sendernum:String= uemail
