@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -25,7 +29,7 @@ class Home: AppCompatActivity() {
     private var layoutManager: RecyclerView.LayoutManager?=null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>?=null
     private var adapter1: RecyclerView.Adapter<interprenurAdapter.ViewHolder>?=null
-
+    lateinit var mAdView : AdView
     //var titles:List<String> = listOf()
     //var contct:List<String> = listOf()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,14 +96,14 @@ class Home: AppCompatActivity() {
         //getSupportActionBar()?.hide();
         //setSupportActionBar(toolbar1);
 
-        val frameLayout=findViewById<FrameLayout>(R.id.main_framelayout)
         val drawer=findViewById<DrawerLayout>(R.id.drawerlayout)
+        val navigationView=findViewById<NavigationView>(R.id.navigation)
 
         toggle= ActionBarDrawerToggle(this,drawer,toolbar1,R.string.open,R.string.close)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        navview.setNavigationItemSelectedListener{
+        navigationView.setNavigationItemSelectedListener{
             when(it.itemId) {
                 R.id.home->{
                     val i =Intent(this,editprofile::class.java)
@@ -114,6 +118,13 @@ class Home: AppCompatActivity() {
             }
             true
         }
+        val adView = AdView(this)
+        adView.adUnitId = "ca-app-pub-7609484430360569/6858678891"
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
        // val firebasestorage: FirebaseStorage = FirebaseStorage.getInstance()
         //val storagereference = firebasestorage.getReference("Images")
         /*val firebasereference = FirebaseDatabase.getInstance().getReference("Users")
