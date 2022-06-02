@@ -31,12 +31,12 @@ class ChatActivity : AppCompatActivity() {
         // val intent = Intent()
         val i=getIntent()
         val name = i.getStringExtra("name")
-        val receiverUid = i.getStringExtra("email")
-        val senderUid= i.getStringExtra("uemail")
+        val receiverUid:String = i.getStringExtra("email").toString()
+        val senderUid:String= i.getStringExtra("uemail").toString()
         mDbRef = FirebaseDatabase.getInstance().getReference("chats")
 
-        senderRoom = receiverUid + senderUid
-        receiverRoom = senderUid + receiverUid
+        senderRoom= (receiverUid.toLong()+ senderUid.toLong()).toString()
+        receiverRoom =  senderUid+receiverUid
 
         supportActionBar?.title = name
 
@@ -44,13 +44,13 @@ class ChatActivity : AppCompatActivity() {
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sentButton)
         SmessageList = ArrayList()
-        messageAdapter = MessageAdapter(this, SmessageList)
+        messageAdapter = MessageAdapter(this, SmessageList, senderUid)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
         // logic for adding data to recyclerView
-        mDbRef.child(senderRoom!!).child("messages")
+        mDbRef.child(senderRoom.toString()).child("messages")
             .addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -76,7 +76,7 @@ class ChatActivity : AppCompatActivity() {
             val message = messageBox.text.toString()
             val messageObject = Message(message, senderUid)
 
-            mDbRef.child(senderRoom!!).child("messages").push()
+            mDbRef.child(senderRoom.toString()).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     Toast.makeText(context,"wowwwwwwwwhowwwwww",Toast.LENGTH_SHORT).show()
                 }
