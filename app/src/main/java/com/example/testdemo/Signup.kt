@@ -2,12 +2,14 @@ package com.example.testdemo
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.Window
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.database.FirebaseDatabase
 class Signup:AppCompatActivity() {
     lateinit var status:String
@@ -17,7 +19,8 @@ class Signup:AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-
+        val anime=findViewById<LottieAnimationView>(R.id.loadinganime)
+        anime.visibility= View.GONE
         requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
         getSupportActionBar()?.hide();
         setContentView(R.layout._signup)
@@ -33,6 +36,7 @@ class Signup:AppCompatActivity() {
         })
         val signUpButton = findViewById<ImageButton>(R.id.button2)
         signUpButton.setOnClickListener {
+            anime.visibility=View.VISIBLE
             val name=nameView.getText().toString().trim()
             val email = emailView.getText().toString().trim()
             val password = PassView.getText().toString().trim()

@@ -10,13 +10,29 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MessageAdapter(val context: Context, val RmessageList: ArrayList<Message>, val senderUid:String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        const val ITEM_RECEIVE = 1
+        const val ITEM_SENT = 2
+    }
+    inner class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var sentMessage =itemView.findViewById<TextView>(R.id.txt_sent_message)
+        fun bind(position: Int){
+            val recyclerViewmodel=RmessageList[position]
+            sentMessage.text=recyclerViewmodel.message
+        }
 
-    val ITEM_RECEIVE = 1
-    val ITEM_SENT = 2
+    }
 
+    inner class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        var receiveMessage=itemView.findViewById<TextView>(R.id.txt_receive_message)
+        fun bind(position: Int){
+            val recyclerViewmodel=RmessageList[position]
+            receiveMessage.text=recyclerViewmodel.message
+        }
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        if(viewType == 1){
+        if(viewType == ITEM_RECEIVE){
             // inflate receive
             val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             return ReceiveViewHolder(view)
@@ -35,12 +51,12 @@ class MessageAdapter(val context: Context, val RmessageList: ArrayList<Message>,
 
         if(temp.equals(senderUid)){
             // do the stuff for sent view holde
-            (holder as SentViewHolder).sentMessage.text = currentMessage.message.toString()
+            (holder as SentViewHolder).bind(position)
 
         }else{
             // do stuff for receive view holder
             //viewHolder = holder as ReceiveViewHolder
-            (holder as ReceiveViewHolder).receiveMessage.text = currentMessage.message.toString()
+            (holder as ReceiveViewHolder).bind(position)
         }
 
     }
@@ -48,7 +64,8 @@ class MessageAdapter(val context: Context, val RmessageList: ArrayList<Message>,
     override fun getItemViewType(position: Int): Int {
 
         val currentMessage = RmessageList[position]
-        if(FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.senderId)){
+        val temp:String=currentMessage.senderId.toString()
+        if(temp.equals(senderUid)){
             return ITEM_SENT
         }else{
             return ITEM_RECEIVE
@@ -60,17 +77,4 @@ class MessageAdapter(val context: Context, val RmessageList: ArrayList<Message>,
 
     }
 
-    class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val sentMessage :TextView
-        init{
-            sentMessage=itemView.findViewById<TextView>(R.id.txt_sent_message)
-        }
-    }
-
-    class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val receiveMessage:TextView
-        init{
-            receiveMessage=itemView.findViewById<TextView>(R.id.txt_receive_message)
-        }
-    }
 }

@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.database.*
 
 class Signin : AppCompatActivity() {
@@ -23,6 +25,8 @@ class Signin : AppCompatActivity() {
         val Signin_button=findViewById<ImageButton>(R.id.button2)
         val emailview=findViewById<EditText>(R.id.editTextTextEmailAddress)
         val frgtbtn =findViewById<TextView>(R.id.forgetbtn)
+        val anime=findViewById<LottieAnimationView>(R.id.loadinganime1)
+        anime.visibility= View.GONE
         chip.setOnClickListener {
             if(a==false)
             {
@@ -48,6 +52,7 @@ class Signin : AppCompatActivity() {
             startActivity(i);
         }
         Signin_button.setOnClickListener{
+            anime.visibility=View.VISIBLE
             val emailstr=emailview.getText().toString().trim()
             val passstr=password.getText().toString().trim()
             val firebase=FirebaseDatabase.getInstance()
